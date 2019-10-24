@@ -1,14 +1,34 @@
-import React,{Fragment} from 'react'
+import React,{Fragment, useState} from 'react'
 
 function Pregunta(){
+
+    //definir el state
+    const [cantidad, guardarCantidad] = useState(0);
+    const [error, guardarError] = useState(false);
+
+
+    //validar Presupuesto
+
+    const agregarPresupuesto = e =>{
+        e.preventDefault();
+        //validar
+        if(cantidad < 1 || isNaN(cantidad)){
+           guardarError(true)
+           return;
+        }
+    }
+
     return(
         <Fragment>
         <h2>Coloca tu Presupuesto</h2>
-        <form action="">
+        {error ? <p className="alert alert-danger error">El presupuesto es Incorrecto </p>: null}
+        <form action=""
+            onSubmit={agregarPresupuesto}
+        >
             <input type="number" 
                    className="u-full-width"
                    placeholder="Agrega tu presupuesto"
-                   //onChange={}
+                   onChange={e => guardarCantidad(parseInt(e.target.value, 10))}
                    />
              <input type="submit"
                     className="u-full-width button-primary" value="Definir Presupuesto"/>      
