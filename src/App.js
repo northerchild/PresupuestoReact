@@ -1,11 +1,20 @@
-import React, {useState} from 'react';
-import Pregunta from './components/Pregunta'
-import Formulario from './components/Formulario'
+import React, {useState, useEffect} from 'react';
+import Pregunta from './components/Pregunta';
+import Formulario from './components/Formulario';
+import Listado from './components/Listado';
 function App() {
 
   //state
   const [presupuesto, guardarPresupuesto] = useState(0);
   const [preguntaPresupuesto, guardarPreguntaPresupuesto] = useState(true);
+  const [gasto, guardarGasto] = useState({});
+  const [gastos, guardarGastos] = useState([]);
+
+
+  useEffect(()=>{
+    const listadoGasto = [...gastos, gasto];
+    guardarGastos(listadoGasto);
+  },[])
 
   return (
     <div className="App container">
@@ -17,8 +26,8 @@ function App() {
           guardarPreguntaPresupuesto={guardarPreguntaPresupuesto}/>
         :(
           <div className="row">
-            <div className="one-half column"><Formulario /></div>
-            <div className="one-half column"></div>
+            <div className="one-half column"><Formulario guardarGasto={guardarGasto}/></div>
+            <div className="one-half column"><Listado gasto={gasto}/></div>
           </div>
         )
         }
