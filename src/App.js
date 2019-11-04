@@ -7,14 +7,19 @@ function App() {
   //state
   const [presupuesto, guardarPresupuesto] = useState(0);
   const [preguntaPresupuesto, guardarPreguntaPresupuesto] = useState(true);
+  const [crearGasto, guardarCrearGasto] = useState(false);
   const [gasto, guardarGasto] = useState({});
   const [gastos, guardarGastos] = useState([]);
 
 
   useEffect(()=>{
-    const listadoGasto = [...gastos, gasto];
-    guardarGastos(listadoGasto);
-  },[])
+    if(crearGasto){
+    const listadoGastos = [...gastos, gasto];
+    guardarGastos(listadoGastos);
+    // Una vez que se agrega, lo ponemos como false
+    guardarCrearGasto(false);
+  }
+  },[crearGasto]);
 
   return (
     <div className="App container">
@@ -26,8 +31,8 @@ function App() {
           guardarPreguntaPresupuesto={guardarPreguntaPresupuesto}/>
         :(
           <div className="row">
-            <div className="one-half column"><Formulario guardarGasto={guardarGasto}/></div>
-            <div className="one-half column"><Listado gasto={gasto}/></div>
+            <div className="one-half column"><Formulario guardarGasto={guardarGasto} guardarCrearGasto={guardarCrearGasto}/></div>
+            <div className="one-half column"><Listado gastos={gastos}/></div>
           </div>
         )
         }
